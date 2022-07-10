@@ -1,5 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
+import Pallets from './components/Pallets';
+//import MyComponent from './components/take';
 
 function App() {
   return (
@@ -11,12 +13,13 @@ function App() {
         </p>
         <a
           className="App-link"
-          href="https://reactjs.org"
+          href="http:3001/localhost/pallets/"
           target="_blank"
           rel="noopener noreferrer"
         >
           Learn React
         </a>
+        <Pallets/>
       </header>
     </div>
   );
