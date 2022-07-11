@@ -13,7 +13,7 @@ class Pallets extends Component {
 		this.timerID = setInterval(() => this.tick(), 1000);
 		axioaApi.get('pallets/')
 		.then(res => {
-			const pallets = res.headers;
+			const pallets = res.data;
 			this.setState ({ pallets })
 		})
 		
@@ -37,8 +37,8 @@ class Pallets extends Component {
 			<ul>
 				{
 					this.state.pallets.map(pallet => 
-						<li key={pallet}>
-							lkl
+						<li key={pallet.id}>
+							{pallet.id}
 						</li>)
 				}
 			</ul>
