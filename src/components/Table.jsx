@@ -11,16 +11,16 @@ function Table() {
     truckNum: ''
   })
 
-  // eslint-disable-next-line no-extend-native
-  String.prototype.capitalizeFirstLetter = function () {
-    return this.charAt(0).toUpperCase() + this.slice(1);
-  }
+ 
+
 
   const handleAddFormChance = (event) => {
     event.preventDefault()
 
     const fieldName = event.target.getAttribute('name')
-    const fieldValue = event.target.value.capitalizeFirstLetter()
+    const fieldValue = event.target.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1)).join(' ')
+
+
 
     const newFormData = { ...addFormData }
     newFormData[fieldName] = fieldValue
@@ -37,7 +37,7 @@ function Table() {
       fullName: addFormData.fullName,
       address: addFormData.address,
       phoneNumber: addFormData.phoneNumber,
-      truckNum: addFormData.truckNum,
+      truckNum: addFormData.truckNum.toUpperCase(),
     }
 
     const newContacts = [...contacts, newContact]
