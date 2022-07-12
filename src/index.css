@@ -25,3 +25,6 @@ form {
   margin: auto;
 }
 
+input[type="text"] {
+  text-transform: uppercase;
+}

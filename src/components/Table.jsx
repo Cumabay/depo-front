@@ -8,62 +8,67 @@ function Table() {
     fullName: '',
     address: '',
     phoneNumber: '',
-    email: ''
+    truckNum: ''
   })
+
+  // eslint-disable-next-line no-extend-native
+  String.prototype.capitalizeFirstLetter = function () {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+  }
 
   const handleAddFormChance = (event) => {
     event.preventDefault()
 
     const fieldName = event.target.getAttribute('name')
-    const fieldValue = event.target.value
+    const fieldValue = event.target.value.capitalizeFirstLetter()
 
     const newFormData = { ...addFormData }
     newFormData[fieldName] = fieldValue
 
     setAddFormData(newFormData)
   }
-    
 
-    const handleAddFormSubmit = (event) => {
-      event.preventDefault()
-  
-      const newContact = {
-        id: nanoid(),
-        fullName: addFormData.fullName,
-        address: addFormData.address,
-        phoneNumber: addFormData.phoneNumber,
-        email: addFormData.email,
-      }
-  
-      const newContacts = [...contacts, newContact]
-      setContacts(newContacts)
+
+  const handleAddFormSubmit = (event) => {
+    event.preventDefault()
+
+    const newContact = {
+      id: nanoid(),
+      fullName: addFormData.fullName,
+      address: addFormData.address,
+      phoneNumber: addFormData.phoneNumber,
+      truckNum: addFormData.truckNum,
     }
-  
+
+    const newContacts = [...contacts, newContact]
+    setContacts(newContacts)
+  }
+
   return (<div className="conteiner content">
     <h4>Добавить Заезд</h4>
     <form onSubmit={handleAddFormSubmit}>
       <input type="text"
         name="fullName"
         required="required"
-        placeholder="Введите И. Ф"
+        placeholder="Фамилия Имя"
         onChange={handleAddFormChance}
       />
       <input type="text"
         name="address"
         required="required"
-        placeholder="Введите Адрес"
+        placeholder="Направление"
         onChange={handleAddFormChance}
       />
-      <input type="number"
+      <input type="text"
         name="phoneNumber"
         required="required"
-        placeholder="Введите Номер"
+        placeholder="Телефон:"
         onChange={handleAddFormChance}
       />
-      <input type="email"
-        name="email"
+      <input type="text"
+        name="truckNum"
         required="required"
-        placeholder="Введите Почту"
+        placeholder="Номер машины"
         onChange={handleAddFormChance}
       />
       <button className="btn boxBtn" type="submit">Добавить</button>
@@ -83,7 +88,7 @@ function Table() {
             <td>{contact.fullName}</td>
             <td>{contact.address}</td>
             <td>{contact.phoneNumber}</td>
-            <td>{contact.email}</td>
+            <td>{contact.truckNum}</td>
           </tr>
         ))}
       </tbody>
