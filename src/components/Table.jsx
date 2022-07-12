@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import data from '../mock-data.json'
+import { nanoid } from 'nanoid'
 
 function Table() {
-  const [contacts, SetContacts] = useState(data)
+  const [contacts, setContacts] = useState(data)
   const [addFormData, setAddFormData] = useState({
     fullName: '',
     address: '',
@@ -21,34 +22,50 @@ function Table() {
 
     setAddFormData(newFormData)
   }
+    
 
+    const handleAddFormSubmit = (event) => {
+      event.preventDefault()
+  
+      const newContact = {
+        id: nanoid(),
+        fullName: addFormData.fullName,
+        address: addFormData.address,
+        phoneNumber: addFormData.phoneNumber,
+        email: addFormData.email,
+      }
+  
+      const newContacts = [...contacts, newContact]
+      setContacts(newContacts)
+    }
+  
   return (<div className="conteiner content">
     <h4>Добавить Заезд</h4>
-    <form>
+    <form onSubmit={handleAddFormSubmit}>
       <input type="text"
         name="fullName"
         required="required"
         placeholder="Введите И. Ф"
         onChange={handleAddFormChance}
-        />
+      />
       <input type="text"
         name="address"
         required="required"
-        placeholder="Введите Адрес" 
+        placeholder="Введите Адрес"
         onChange={handleAddFormChance}
-        />
+      />
       <input type="number"
         name="phoneNumber"
         required="required"
-        placeholder="Введите Номер" 
+        placeholder="Введите Номер"
         onChange={handleAddFormChance}
-        />
+      />
       <input type="email"
         name="email"
         required="required"
-        placeholder="Введите Почту" 
+        placeholder="Введите Почту"
         onChange={handleAddFormChance}
-        />
+      />
       <button className="btn boxBtn" type="submit">Добавить</button>
     </form>
     <table className="centered">
