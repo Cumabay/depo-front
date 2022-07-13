@@ -1,10 +1,23 @@
 [
   {
     "id": 1,
-    "fullName": "Jenny Chan",
-    "address": "3 waterfoot road",
-    "phoneNumber": "333-962-7516",
+    "fullName": "Павел Воля",
+    "address": "Магадан",
+    "phoneNumber": "0774584512",
+    "truckNum": "BC4765XP"
+  },
+  {
+    "id": 1,
+    "fullName": "Павел Воля",
+    "address": "Магадан",
+    "phoneNumber": "0774584512",
+    "truckNum": "BC4765XP"
+  },
+  {
+    "id": 1,
+    "fullName": "Павел Воля",
+    "address": "Магадан",
+    "phoneNumber": "0774584512",
     "truckNum": "BC4765XP"
   }
- 
 ]

@@ -8,7 +8,7 @@ const ReadOnlyRow = ({ contact, handleEditClick }) => {
       <td>{contact.phoneNumber}</td>
       <td>{contact.truckNum}</td>
       <button
-        className='btn'
+        className='btn boxRed yellow darken-4'
         type='button'
         onClick={(event) => handleEditClick(event, contact)}
       >

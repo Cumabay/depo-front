@@ -10,12 +10,17 @@ function Table() {
     fullName: '',
     address: '',
     phoneNumber: '',
-    truckNum: ''
+    truckNum: '',
   })
 
-  const [editContactId, setEditContactId] = useState()
+  const [editFormData, setEditFormData] = useState({
+    fullName: '',
+    address: '',
+    phoneNumber: '',
+    truckNum: '',
+  })
 
-
+  const [editContactId, setEditContactId] = useState(null)
 
   const handleAddFormChance = (event) => {
     event.preventDefault()
@@ -29,6 +34,19 @@ function Table() {
     newFormData[fieldName] = fieldValue
 
     setAddFormData(newFormData)
+  }
+
+  const handleEditFormChance = (event) => {
+    event.preventDefault()
+
+    const fieldName = event.target.getAttribute('name')
+    const fieldValue = event.target.value
+
+
+    const newFormData = { ...editFormData }
+    newFormData[fieldName] = fieldValue
+
+    setEditFormData(newFormData)
   }
 
 
@@ -50,10 +68,41 @@ function Table() {
   const handleEditClick = (event, contact) => {
     event.preventDefault()
     setEditContactId(contact.id)
+
+    const formValues = {
+      fullName: contact.fullName,
+      address: contact.address,
+      phoneNumber: contact.phoneNumber,
+      truckNum: contact.truckNum,
+    }
+
+    setEditFormData(formValues)
+  }
+
+  const handleEditFormCSubmit = (event) => {
+    event.preventDefault()
+
+    const editedContact = {
+      id: editContactId,
+      fullName: editFormData.fullName,
+      address: editFormData.address,
+      phoneNumber: editFormData.phoneNumber.toUpperCase(),
+      truckNum: editFormData.truckNum.toUpperCase(),
+    }
+
+    const newContacts = [...contacts]
+
+    const index = contacts.findIndex((contact) =>
+      contact.id === editContactId)
+
+    newContacts[index] = editedContact
+
+    setContacts(newContacts)
+    setEditContactId()
   }
 
   return (<div className="conteiner content">
-    <h4>Добавить Заезд</h4>
+    <h4>Парковка</h4>
     <form onSubmit={handleAddFormSubmit}>
       <input type="text"
         name="fullName"
@@ -79,11 +128,11 @@ function Table() {
         placeholder="Номер машины"
         onChange={handleAddFormChance}
       />
-      <button className="btn boxBtn" type="submit">Добавить</button>
+      <button className="btn boxBtn light-blue darken-4" type="submit">Добавить</button>
     </form>
     <br />
     <br />
-    <form>
+    <form onSubmit={handleEditFormCSubmit}>
       <table className="centered">
         <thead className="card-panel green lighten-5">
           <tr>
@@ -91,14 +140,17 @@ function Table() {
             <th>Адрес Отправки</th>
             <th>Номер Телефона</th>
             <th>Номер Машины</th>
-            <th>Actions</th>
+            <th>Настройки</th>
           </tr>
         </thead>
         <tbody>
           {contacts.map((contact) => (
             <Fragment>
               {editContactId === contact.id ? (
-                <EditableRow />
+                <EditableRow
+                  editFormData={editFormData}
+                  handleEditFormChance={handleEditFormChance}
+                />
               ) : (
                 <ReadOnlyRow
                   contact={contact}
