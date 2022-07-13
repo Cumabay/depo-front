@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, Fragment } from 'react'
 import data from '../mock-data.json'
 import { nanoid } from 'nanoid'
+import ReadOnlyRow from './ReadOnlyRow'
+import EditableRow from './EditableRow'
 
 function Table() {
   const [contacts, setContacts] = useState(data)
@@ -11,7 +13,8 @@ function Table() {
     truckNum: ''
   })
 
- 
+  const [editContactId, setEditContactId] = useState()
+
 
 
   const handleAddFormChance = (event) => {
@@ -44,6 +47,11 @@ function Table() {
     setContacts(newContacts)
   }
 
+  const handleEditClick = (event, contact) => {
+    event.preventDefault()
+    setEditContactId(contact.id)
+  }
+
   return (<div className="conteiner content">
     <h4>Добавить Заезд</h4>
     <form onSubmit={handleAddFormSubmit}>
@@ -73,26 +81,35 @@ function Table() {
       />
       <button className="btn boxBtn" type="submit">Добавить</button>
     </form>
-    <table className="centered">
-      <thead className="card-panel green lighten-5">
-        <tr>
-          <th>Имя Фамилия</th>
-          <th>Адрес Отправки</th>
-          <th>Номер Телефона</th>
-          <th>Номер Машины</th>
-        </tr>
-      </thead>
-      <tbody>
-        {contacts.map((contact) => (
+    <br />
+    <br />
+    <form>
+      <table className="centered">
+        <thead className="card-panel green lighten-5">
           <tr>
-            <td>{contact.fullName}</td>
-            <td>{contact.address}</td>
-            <td>{contact.phoneNumber}</td>
-            <td>{contact.truckNum}</td>
+            <th>Имя Фамилия</th>
+            <th>Адрес Отправки</th>
+            <th>Номер Телефона</th>
+            <th>Номер Машины</th>
+            <th>Actions</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {contacts.map((contact) => (
+            <Fragment>
+              {editContactId === contact.id ? (
+                <EditableRow />
+              ) : (
+                <ReadOnlyRow
+                  contact={contact}
+                  handleEditClick={handleEditClick}
+                />
+              )}
+            </Fragment>
+          ))}
+        </tbody>
+      </table>
+    </form>
   </div>
   )
 }
