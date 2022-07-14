@@ -1,6 +1,10 @@
 import React from 'react'
 
-const EditableRow = ({ editFormData, handleEditFormChance }) => {
+const EditableRow = ({
+  editFormData,
+  handleEditFormChance,
+  handleCancelClick,
+}) => {
   return (
     <tr>
       <td>
@@ -44,6 +48,7 @@ const EditableRow = ({ editFormData, handleEditFormChance }) => {
       </td>
       <td>
         <button className='btn boxRed green darken-1' type='submit'>Сохранить</button>
+        <button className='btn boxRed blue-grey darken-4' type='button' onClick={handleCancelClick}>Отмена</button>
       </td>
     </tr>
   )

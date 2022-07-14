@@ -79,6 +79,10 @@ function Table() {
     setEditFormData(formValues)
   }
 
+  const handleCancelClick = () => {
+    setEditContactId(null)
+  }
+
   const handleEditFormCSubmit = (event) => {
     event.preventDefault()
 
@@ -150,6 +154,7 @@ function Table() {
                 <EditableRow
                   editFormData={editFormData}
                   handleEditFormChance={handleEditFormChance}
+                  handleCancelClick={handleCancelClick}
                 />
               ) : (
                 <ReadOnlyRow
