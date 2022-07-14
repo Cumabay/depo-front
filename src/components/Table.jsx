@@ -83,6 +83,16 @@ function Table() {
     setEditContactId(null)
   }
 
+  const handleDeleteClick = (contactId) => {
+    const newContacts = [...contacts]
+
+    const index = contacts.findIndex((contact) => contact.id === contactId)
+
+    newContacts.splice(index, 1)
+
+    setContacts(newContacts);
+  }
+
   const handleEditFormCSubmit = (event) => {
     event.preventDefault()
 
@@ -160,6 +170,7 @@ function Table() {
                 <ReadOnlyRow
                   contact={contact}
                   handleEditClick={handleEditClick}
+                  handleDeleteClick={handleDeleteClick}
                 />
               )}
             </Fragment>
