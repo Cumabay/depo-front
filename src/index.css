@@ -12,6 +12,9 @@ body {
   min-height: calc(100vh - 79px - 78px);
 }
 
+.contentHistory {
+  min-height: calc(100vh - 67px - 67px);
+}
 
 nav {
   padding: 0 1rem;
@@ -38,6 +41,3 @@ h4 {
 button {
   font-family: 'Caveat', cursive;
 }
-
-
-
