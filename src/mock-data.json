@@ -1,37 +1,23 @@
 [
   {
     "id": 1,
-    "fullName": "Jenny Chan",
-    "address": "3 waterfoot road",
-    "phoneNumber": "333-962-7516",
+    "fullName": "Павел Воля",
+    "address": "Магадан",
+    "phoneNumber": "0774584512",
     "truckNum": "BC4765XP"
   },
   {
-    "id": 2,
-    "fullName": "Jessica warren",
-    "address": "4 tall town",
-    "phoneNumber": "011-211-7516",
+    "id": 1,
+    "fullName": "Павел Воля",
+    "address": "Магадан",
+    "phoneNumber": "0774584512",
     "truckNum": "BC4765XP"
   },
   {
-    "id": 3,
-    "fullName": "Tony Frank",
-    "address": "11 lesly road",
-    "phoneNumber": "788-962-7516",
-    "truckNum": "BC4765XP"
-  },
-  {
-    "id": 4,
-    "fullName": "Jeremy Clark",
-    "address": "333 miltown manor",
-    "phoneNumber": "011-962-111",
-    "truckNum": "BC4765XP"
-  },
-  {
-    "id": 5,
-    "fullName": "Raymond Edwards",
-    "address": "99 blue acres",
-    "phoneNumber": "3231-962-7516",
+    "id": 1,
+    "fullName": "Павел Воля",
+    "address": "Магадан",
+    "phoneNumber": "0774584512",
     "truckNum": "BC4765XP"
   }
 ]

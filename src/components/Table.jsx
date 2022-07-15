@@ -1,26 +1,34 @@
-import React, { useState } from 'react';
-import data from '../mock-data.json';
-import { nanoid } from 'nanoid';
-import axioaApi from '../api/axios/axios-baseurl'
+import React, { useState, Fragment } from 'react'
+import data from '../mock-data.json'
+import { nanoid } from 'nanoid'
+import ReadOnlyRow from './ReadOnlyRow'
+import EditableRow from './EditableRow'
 
 function Table() {
-  const dataTest = axioaApi.get('trucks/')
-  .then(res => {
-    const tracks = res.data;
-    this.setState ({ tracks })
+  const [contacts, setContacts] = useState(data)
+  const [addFormData, setAddFormData] = useState({
+    fullName: '',
+    address: '',
+    phoneNumber: '',
+    truckNum: '',
   })
 
+  const [editFormData, setEditFormData] = useState({
+    fullName: '',
+    address: '',
+    phoneNumber: '',
+    truckNum: '',
+  })
 
-  const [contacts, setContacts] = useState(data);
-  const [addFormData, setAddFormData] = useState({ fullName: ', address: ', phoneNumber: ', truckNum: ' });
+  const [editContactId, setEditContactId] = useState(null)
 
-  // eslint-disable-next-line no-extend-native
-  String.prototype.capitalizeFirstLetter = function () {
-    return this.charAt(0).toUpperCase() + this.slice(1);
-  };
+  const handleAddFormChance = (event) => {
+    event.preventDefault()
 
-  const handleAddFormChance = event => {
-    event.preventDefault();
+    const fieldName = event.target.getAttribute('name')
+    const fieldValue = event.target.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1)).join(' ')
+
+
 
     const fieldName = event.target.getAttribute('name');
     const fieldValue = event.target.value.capitalizeFirstLetter();
@@ -30,8 +38,19 @@ function Table() {
     };
     newFormData[fieldName] = fieldValue;
 
-    setAddFormData(newFormData);
-  };
+  const handleEditFormChance = (event) => {
+    event.preventDefault()
+
+    const fieldName = event.target.getAttribute('name')
+    const fieldValue = event.target.value
+
+
+    const newFormData = { ...editFormData }
+    newFormData[fieldName] = fieldValue
+
+    setEditFormData(newFormData)
+  }
+
 
   const handleAddFormSubmit = event => {
     event.preventDefault();
@@ -41,8 +60,8 @@ function Table() {
       fullName: addFormData.fullName,
       address: addFormData.address,
       phoneNumber: addFormData.phoneNumber,
-      truckNum: addFormData.truckNum
-    };
+      truckNum: addFormData.truckNum.toUpperCase(),
+    }
 
     const newContacts = [
       ...contacts,
@@ -51,42 +70,105 @@ function Table() {
     setContacts(newContacts);
   };
 
-  return (<div className='conteiner content'>
-    <h4>Добавить Заезд</h4>
+  const handleEditClick = (event, contact) => {
+    event.preventDefault()
+    setEditContactId(contact.id)
+
+    const formValues = {
+      fullName: contact.fullName,
+      address: contact.address,
+      phoneNumber: contact.phoneNumber,
+      truckNum: contact.truckNum,
+    }
+
+    setEditFormData(formValues)
+  }
+
+  const handleEditFormCSubmit = (event) => {
+    event.preventDefault()
+
+    const editedContact = {
+      id: editContactId,
+      fullName: editFormData.fullName,
+      address: editFormData.address,
+      phoneNumber: editFormData.phoneNumber.toUpperCase(),
+      truckNum: editFormData.truckNum.toUpperCase(),
+    }
+
+    const newContacts = [...contacts]
+
+    const index = contacts.findIndex((contact) =>
+      contact.id === editContactId)
+
+    newContacts[index] = editedContact
+
+    setContacts(newContacts)
+    setEditContactId()
+  }
+
+  return (<div className="conteiner content">
+    <h4>Парковка</h4>
     <form onSubmit={handleAddFormSubmit}>
-      <input type='text' name='fullName' required='required' placeholder='Фамилия Имя' onChange={handleAddFormChance} />
-      <input type='text' name='address' required='required' placeholder='Направление' onChange={handleAddFormChance} />
-      <input type='text' name='phoneNumber' required='required' placeholder='Телефон:' onChange={handleAddFormChance} />
-      <input type='text' name='truckNum' required='required' placeholder='Номер машины' onChange={handleAddFormChance} />
-      <button className='btn boxBtn' type='submit'>
-        Добавить
-      </button>
+      <input type="text"
+        name="fullName"
+        required="required"
+        placeholder="Фамилия Имя"
+        onChange={handleAddFormChance}
+      />
+      <input type="text"
+        name="address"
+        required="required"
+        placeholder="Направление"
+        onChange={handleAddFormChance}
+      />
+      <input type="text"
+        name="phoneNumber"
+        required="required"
+        placeholder="Телефон:"
+        onChange={handleAddFormChance}
+      />
+      <input type="text"
+        name="truckNum"
+        required="required"
+        placeholder="Номер машины"
+        onChange={handleAddFormChance}
+      />
+      <button className="btn boxBtn light-blue darken-4" type="submit">Добавить</button>
     </form>
-    <table className='centered'>
-      <thead className='card-panel green lighten-5'>
-        <tr>
-          <th>Въезд/Выезд</th>
-          <th>Имя Фамилия</th>
-          <th>Телефон</th>
-          <th>Номер авто</th>
-          <th>Цель въезда</th>
-          <th>Номенклатура</th>          
-        </tr>
-      </thead>
-      <tbody>
-        {
-          contacts.map(contact => (<tr>
-            <td>{contact.fullName}</td>
-            <td>{contact.address}</td>
-            <td>{contact.phoneNumber}</td>
-            <td>{contact.truckNum}</td>
-            <td></td>
-            <td></td>
-          </tr>))
-        }
-      </tbody>
-    </table>
-  </div>);
+    <br />
+    <br />
+    <form onSubmit={handleEditFormCSubmit}>
+      <table className="centered">
+        <thead className="card-panel green lighten-5">
+          <tr>
+            <th>Имя Фамилия</th>
+            <th>Адрес Отправки</th>
+            <th>Номер Телефона</th>
+            <th>Номер Машины</th>
+            <th>Настройки</th>
+          </tr>
+        </thead>
+        <tbody>
+          {contacts.map((contact) => (
+            <Fragment>
+              {editContactId === contact.id ? (
+                <EditableRow
+                  editFormData={editFormData}
+                  handleEditFormChance={handleEditFormChance}
+                />
+              ) : (
+                <ReadOnlyRow
+                  contact={contact}
+                  handleEditClick={handleEditClick}
+                />
+              )}
+            </Fragment>
+          ))}
+        </tbody>
+      </table>
+    </form>
+  </div>
+  )
 }
 
 export default Table;
