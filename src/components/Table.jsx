@@ -28,15 +28,11 @@ function Table() {
     const fieldName = event.target.getAttribute('name')
     const fieldValue = event.target.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1)).join(' ')
 
-
-
-    const fieldName = event.target.getAttribute('name');
-    const fieldValue = event.target.value.capitalizeFirstLetter();
-
     const newFormData = {
       ...addFormData
     };
     newFormData[fieldName] = fieldValue;
+  }
 
   const handleEditFormChance = (event) => {
     event.preventDefault()
