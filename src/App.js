@@ -4,7 +4,7 @@ import { Footer } from './layout/Footer';
 import { Header } from './layout/Header';
 import Table from './components/Table';
 import History from './components/History/History';
-import Tables from './pages/Tables';
+import Login from './auth/Login';
 
 
 
@@ -17,6 +17,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Table />} />
             <Route path="/history" element={<History />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </BrowserRouter>
       </div>
